@@ -19,8 +19,8 @@
 ##items table
 |Colum                  |Type     |Options                       |
 |-----------------------|---------|------------------------------|
-|item_name              |string   |NOT NULL val Max40            |
-|item_introduce         |text     |NOT NULL val Max1000          |
+|name                   |string   |NOT NULL val Max40            |
+|introduce              |text     |NOT NULL val Max1000          |
 |category_id            |integer  |NOT NULL                      |
 |state_id               |integer  |NOT NULL                      |
 |delivery_burden_id     |integer  |NOT NULL                      |

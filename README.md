@@ -5,38 +5,38 @@
 |------------------|-------|-----------------------|
 |nickname          |string |NOT NULL               |
 |email             |string |NOT NULL               |
-|password          |string |NOT NULL  val 6 >= char|
-|last_name(kanji)  |text   |NOT NULL               |
-|first_name(kanji) |text   |NOT NULL               |
-|last_name(kana)   |text   |NOT NULL               |
-|first_name(kana)  |text   |NOT NULL               |
-|birthday          |DATE   |NOT NULL               |
+|encrypted_password|string |NOT NULL  val 6 >= char|
+|last_name_kanji   |string |NOT NULL               |
+|first_name_kanji  |string |NOT NULL               |
+|last_name_kana    |string |NOT NULL               |
+|first_name_kana   |string |NOT NULL               |
+|birthday          |date   |NOT NULL               |
 ### Association
 -has_many :items
 -has_many :purchases
 
 
 ##items table
-|Colum                 |Type     |Options                       |
-|----------------------|---------|------------------------------|
-|item_image            |ActiveStorage                           |
-|item_name             |text     |NOT NULL val Max40            |
-|item_introduce        |text     |NOT NULL val Max1000          |
-|item_details_category |ENUM 1   |NOT NULL                      |
-|item_details_state    |ENUM 2   |NOT NULL                      |
-|delivery_burden       |ENUM 3   |NOT NULL                      |
-|delivery_ prefecture  |ENUM 4   |NOT NULL                      |
-|delivery_dates        |ENUM 5   |NOT NULL                      |
-|price                 |string   |NOT NULL val 300=<, 9999999>= |
-|user_id               |reference|foreign_key :true             |
+|Colum                  |Type     |Options                       |
+|-----------------------|---------|------------------------------|
+|item_name              |string   |NOT NULL val Max40            |
+|item_introduce         |text     |NOT NULL val Max1000          |
+|category_id            |integer  |NOT NULL                      |
+|state_id               |integer  |NOT NULL                      |
+|delivery_burden_id     |integer  |NOT NULL                      |
+|prefecture_id          |integer  |NOT NULL                      |
+|delivery_dates_id      |integer  |NOT NULL                      |
+|price                  |integer  |NOT NULL val 300=<, 9999999>= |
+|user                   |reference|foreign_key :true             |
 ## Association
 -belongs_to :user
 -has_one :purchase
 
-#ENUMオプションの選択肢について
-|Type     |Options                                                            |
+<!-- 添削にて不要 integer型とし、active_hashで下記を実装する
+#integerオプションの選択肢について
+|Colum    |Options                                                            |
 |---------|------------------------------------------------------------------ |
-|ENUM 1   |レディス、メンズ、ベビー・キッズ、インテリア・住まい・小物、本・音楽・ゲーム、  |
+|ENUM1    |レディス、メンズ、ベビー・キッズ、インテリア・住まい・小物、本・音楽・ゲーム、  |
 |         |おもちゃ・ホビー・グッズ、家電・スマホ・カメラ、スポーツ・レジャー、          |
 |         |ハンドメイド、その他                                                  |
 |---------|------------------------------------------------------------------ |
@@ -49,37 +49,30 @@
 |---------|-----------------------------------------------------------------|
 |ENUM 5   |1日〜2日で発送、2日〜3日で発送、4〜7日で発送                             |
 |---------|-------------------------------------------------------------------|
+-->
 
 
 ##purchases table
 |Colum                 |Type     |Options                       |
 |----------------------|---------|------------------------------|
-|card_id               |string   |NOT NULL val 12char           |
-|expiration_date_month |string   |NOT NULL                      |
-|expiration_date_year  |string   |NOT NULL                      |
-|security_number       |string   |NOT NULL val 3 or 4 char      |
-|telephone_number      |string   |NOT NULL val 11char           |
-|user_id               |reference|foreign_key :true             |
-|item_id               |reference|foreign_key :true             |
+|user                  |reference|foreign_key :true             |
+|item                  |reference|foreign_key :true             |
 ## Association
 -belongs_to :user
 -belongs_to :item
+-has_one :shipping_address
 
 
 ##shipping_address table
 |Colum                 |Type     |Options                       |
 |----------------------|---------|------------------------------|
+|telephone_number      |string   |NOT NULL val 11char           |
 |postal_code           |string   |NOT NULL val 8char            |
-|prefecture            |ENUM 4   |NOT NULL                      |
-|cities                |text     |NOT NULL                      |
-|address               |text     |NOT NULL                      |
-|building_name         |text     |                              |
-|purchase_id           |reference|foreign_key :true             |
+|prefecture_id         |integer  |NOT NULL                      |
+|cities                |string   |NOT NULL                      |
+|address               |string   |NOT NULL                      |
+|building_name         |string   |                              |
+|purchase              |reference|foreign_key :true             |
+
 ## Association
 -belongs_to :purchase
-
-#ENUMオプションの選択肢について
-|Type     |Options                                                            |
-|---------|------------------------------------------------------------------|
-|ENUM 4   |北海道、（略）、沖縄                                                 |
-|---------|-----------------------------------------------------------------|

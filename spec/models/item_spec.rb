@@ -18,17 +18,17 @@ RSpec.describe Item, type: :model do
     it 'priceが300円未満では保存できない' do
       @item.price = '100'
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
+      expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
     end
     it 'priceが9999999以上では保存できない' do
       @item.price = '100000000'
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
+      expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
     end
     it 'priceが半角英数字のみ保存可能' do
       @item.price = '３３３３'
       @item.valid?
-      expect(@item.errors.full_messages).to include("Price is not a number")
+      expect(@item.errors.full_messages).to include('Price is not a number')
     end
   end
 end

@@ -9,14 +9,21 @@ class Item < ApplicationRecord
   belongs_to :prefecture
   belongs_to :delivery_date
 
-  validates :image, presence: true
-  validates :name, presence: true
-  validates :introduce, presence: true
-  validates :category_id, numericality: { other_than: 1 }
-  validates :state_id, numericality: { other_than: 1 }
-  validates :delivery_burden_id, numericality: { other_than: 1 }
+  with_options presence: true do
+  validates :image
+  validates :name
+  validates :introduce
+  end
+
+  with_options numericality: { other_than: 1 } do
+  validates :category_id
+  validates :state_id
+  validates :delivery_burden_id
+  validates :delivery_date_id
+  end
+
   validates :prefecture_id, numericality: { other_than: 0 }
-  validates :delivery_date_id, numericality: { other_than: 1 }
+
   validates :price, numericality: { greater_than_or_equal_to: 300 }
   validates :price, numericality: { less_than_or_equal_to: 9_999_999 }
 end

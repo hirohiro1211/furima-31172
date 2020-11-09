@@ -5,6 +5,12 @@ RSpec.describe Item, type: :model do
     before do
       @item = FactoryBot.build(:item)
     end
+
+    it '商品画像がないと出品できない' do
+      @item.image = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
     it 'nameが空だと出品できない' do
       @item.name = ''
       @item.valid?
@@ -14,6 +20,31 @@ RSpec.describe Item, type: :model do
       @item.introduce = ''
       @item.valid?
       expect(@item.errors.full_messages).to include("Introduce can't be blank")
+    end
+    it 'カテゴリー必須' do
+      @item.category = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Category is not a number")
+    end
+    it '商品の状態についての情報が必須' do
+      @item.state = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("State is not a number")
+    end
+    it '配送料の負担についての情報が必須' do
+      @item.delivery_burden = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Delivery burden is not a number")
+    end
+    it '発送元の地域についての情報が必須' do
+      @item.prefecture = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Prefecture is not a number")
+    end
+    it '発送までの日数についての情報が必須' do
+      @item.delivery_date = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Delivery date is not a number")
     end
     it 'priceが300円未満では保存できない' do
       @item.price = '100'

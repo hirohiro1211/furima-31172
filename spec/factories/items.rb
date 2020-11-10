@@ -1,5 +1,10 @@
 FactoryBot.define do
   factory :item do
+
+    after(:build) do |item|
+      item.image.attach(io: File.open('public/images/test_image.png'), filename: 'test_image.png' )
+    end
+    
     name                { Faker::Name.initials(number: 40) }
     introduce           { 'この商品は' }
     category_id         { 2 }
@@ -11,6 +16,5 @@ FactoryBot.define do
 
     association :user
   end
-  image_path = Rails.root.join('public/images/test_image.png')
-  attach_file('item[image]', image_path, make_visible: true)
+  
 end

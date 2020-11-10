@@ -126,7 +126,7 @@
     <%= link_to '新規投稿商品', "/items/new", class: "subtitle" %>
     <ul class='item-lists'>
     
-      <% @items.each do |item| %>
+     <% @items.each do |item| %> 
       <li class='list'>
         <%= link_to do %>
         <div class='item-img-content'> 
@@ -153,7 +153,7 @@
         </div>
         <% end %>
       </li>
-      <% end %>
+     <% end %>
 
       <%# 商品がない場合のダミー %>
       <%# 商品がある場合は表示されないようにしましょう %>

@@ -8,6 +8,9 @@ FactoryBot.define do
     prefecture_id       { 4 }
     state_id            { 3 }
     price               { 10000 }
+
+    association :user
   end
-  association :user
+  image_path = Rails.root.join('public/images/test_image.png')
+  attach_file('item[image]', image_path, make_visible: true)
 end

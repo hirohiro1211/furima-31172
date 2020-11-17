@@ -1,6 +1,6 @@
 class PerchaseShippingAddress
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :telephone_number, :postal_code, :prefecture_id, :city, :address, :building_name, :perchase_id, :token
+  attr_accessor :user_id, :item_id, :telephone_number, :postal_code, :prefecture_id, :city, :address, :building_name, :token
 
   with_options presence: true do
     validates :user_id

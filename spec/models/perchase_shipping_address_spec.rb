@@ -44,7 +44,6 @@ RSpec.describe PerchaseShippingAddress, type: :model do
     end
     it "tokenが空では登録できないこと" do
       @perchase_shipping_address.token = nil
-      binding.pry
       @perchase_shipping_address.valid?
       expect(@perchase_shipping_address.errors.full_messages).to include("Token can't be blank")
     end

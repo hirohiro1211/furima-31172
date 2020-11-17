@@ -1,6 +1,7 @@
 class PerchasesController < ApplicationController
+  before_action :set_item
+
   def index
-   @item = Item.find(params[:item_id])
    @perchase_shipping_address = PerchaseShippingAddress.new
    if user_signed_in? && current_user.id == @item.user_id
     redirect_to root_path
@@ -8,7 +9,6 @@ class PerchasesController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @perchase_shipping_address = PerchaseShippingAddress.new(perchase_params)
     if @perchase_shipping_address.valid?
       pay_item
@@ -23,6 +23,10 @@ class PerchasesController < ApplicationController
   private
   def perchase_params
     params.require(:perchase_shipping_address).permit(:telephone_number, :postal_code, :prefecture_id, :city, :address, :building_name, :perchase_id).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+  end
+  
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
   def pay_item

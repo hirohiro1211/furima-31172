@@ -6,6 +6,10 @@ class PerchasesController < ApplicationController
    if user_signed_in? && current_user.id == @item.user_id
     redirect_to root_path
    end
+
+   unless @item.perchase == nil 
+    redirect_to root_path
+   end
   end
 
   def create
